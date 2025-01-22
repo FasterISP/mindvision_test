@@ -6,10 +6,6 @@
 
 #include "mvcamera/CameraApi.h"
 #include "mvcamera/CameraDefine.h"
-#include "opencv2/core/core.hpp"
-#include "opencv2/core/types_c.h"
-#include "opencv2/highgui/highgui.hpp"
-using namespace cv;
 
 unsigned char *g_pRgbBuffer;  // 处理后数据缓存区
 
@@ -27,7 +23,6 @@ int main() {
   tSdkFrameHead sFrameInfo;
   BYTE *pbyBuffer;
   int iDisplayFrames = 10000;
-  IplImage *iplImage = NULL;
   int channel = 3;
 
   CameraSdkInit(1);

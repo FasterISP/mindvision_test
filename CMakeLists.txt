@@ -8,15 +8,15 @@ ENABLE_LANGUAGE(ASM C CXX)
 set(CAMERA_TEST_THIRD_PARTY_LIBRARY)
 set(ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 
-# opencv
-find_package(OpenCV REQUIRED)
-message(STATUS "OpenCV library status:")
-message(STATUS "    config: ${OpenCV_DIR}") 
-message(STATUS "    version: ${OpenCV_VERSION}")
-message(STATUS "    libraries: ${OpenCV_LIBS}")
-message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
-include_directories(${OpenCV_INCLUDE_DIRS})
-set(CAMERA_TEST_THIRD_PARTY_LIBRARY ${CAMERA_TEST_THIRD_PARTY_LIBRARY} ${OpenCV_LIBS})
+# # opencv
+# find_package(OpenCV REQUIRED)
+# message(STATUS "OpenCV library status:")
+# message(STATUS "    config: ${OpenCV_DIR}") 
+# message(STATUS "    version: ${OpenCV_VERSION}")
+# message(STATUS "    libraries: ${OpenCV_LIBS}")
+# message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
+# include_directories(${OpenCV_INCLUDE_DIRS})
+# set(CAMERA_TEST_THIRD_PARTY_LIBRARY ${CAMERA_TEST_THIRD_PARTY_LIBRARY} ${OpenCV_LIBS})
 
 # mindvision
 set(MINDVISION_PATH ${ROOT_PATH}/third_party/mindvision)
