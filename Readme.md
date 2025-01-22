@@ -1,6 +1,7 @@
 a demo to run mindvision camera in linux
 
 # How to run
+> Before running the following code, you need to make sure your device is plugged into a display and camera that supports the MIndVision SDK
 
 ```Bash
 # install SDL
