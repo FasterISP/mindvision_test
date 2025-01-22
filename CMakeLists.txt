@@ -1,0 +1,54 @@
+cmake_minimum_required(VERSION 3.12)
+
+project(camera_test)
+
+ENABLE_LANGUAGE(ASM C CXX)
+
+# set
+set(CAMERA_TEST_THIRD_PARTY_LIBRARY)
+set(ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+
+# opencv
+find_package(OpenCV REQUIRED)
+message(STATUS "OpenCV library status:")
+message(STATUS "    config: ${OpenCV_DIR}") 
+message(STATUS "    version: ${OpenCV_VERSION}")
+message(STATUS "    libraries: ${OpenCV_LIBS}")
+message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
+include_directories(${OpenCV_INCLUDE_DIRS})
+set(CAMERA_TEST_THIRD_PARTY_LIBRARY ${CAMERA_TEST_THIRD_PARTY_LIBRARY} ${OpenCV_LIBS})
+
+# mindvision
+set(MINDVISION_PATH ${ROOT_PATH}/third_party/mindvision)
+include_directories(${MINDVISION_PATH}/include)
+set(MINDVISION_LIBRARY_PATH)
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm|ARM")
+    set(MINDVISION_LIBRARY_PATH ${MINDVISION_PATH}/lib/arm)
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86|i686")
+    set(MINDVISION_LIBRARY_PATH ${MINDVISION_PATH}/lib/x86)
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "amd64|AMD64")
+    set(MINDVISION_LIBRARY_PATH ${MINDVISION_PATH}/lib/x86)
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64|AARCH64")
+    set(MINDVISION_LIBRARY_PATH ${MINDVISION_PATH}/lib/arm64)
+else()
+    set(MINDVISION_LIBRARY_PATH ${MINDVISION_PATH}/lib)
+endif()
+
+message(STATUS "MINDVISION library status:")
+message(STATUS "    include path:${MINDVISION_PATH}/include")
+message(STATUS "    library path:${MINDVISION_LIBRARY_PATH}/libMVSDK.so")
+set(CAMERA_TEST_THIRD_PARTY_LIBRARY ${CAMERA_TEST_THIRD_PARTY_LIBRARY} ${MINDVISION_LIBRARY_PATH}/libMVSDK.so)    
+
+# SDL
+set(CAMERA_TEST_THIRD_PARTY_LIBRARY ${CAMERA_TEST_THIRD_PARTY_LIBRARY} SDL2)
+
+# binary
+set(BINARY example_camera_test)
+file(GLOB EXAMPLE_CAMERA_TEST_SOURCE
+    "${ROOT_PATH}/main.cc"
+)
+message(STATUS "EXAMPLE_CAMERA_TEST_SOURCE: " ${EXAMPLE_CAMERA_TEST_SOURCE})
+
+add_executable(${BINARY} ${EXAMPLE_CAMERA_TEST_SOURCE})
+set_property(TARGET ${BINARY} PROPERTY FOLDER ${DIRECTORY})
+target_link_libraries(${BINARY} ${CAMERA_TEST_THIRD_PARTY_LIBRARY})
